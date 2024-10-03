@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 
-import { Image, StyleSheet, Platform, View, Button, Text, TextInput } from 'react-native';
+import { View, Button, Text, TextInput } from 'react-native';
+
+import Slider from '@react-native-community/slider';
 
 export default function HomeScreen() {
 const [greeting, setGreeting] = useState('¡Hola, Alumno!');
 
 const [nombre, setNombre] = useState('');
 
-const [bgColor, setBgColor] = useState('#fff'); 
+const [fontSize, setFontSize] = useState(24);
+
 
 return (
+<View style={styles.container}>
 
-<View style={[styles.container, { backgroundColor: bgColor }]}>
-
-<Text style={styles.greetingText}>{greeting}</Text>
+<Text style={[styles.greetingText, { fontSize }]}>
+{greeting}
+</Text>
 
 <TextInput
 style={styles.input}
@@ -27,21 +31,23 @@ title="Actualizar Saludo"
 onPress={() => setGreeting(`¡Hola, ${nombre}!`)}
 />
 
-<View style={styles.buttonContainer}>
-<Button title="Rojo" onPress={() => setBgColor('red')} />
+<Text>Tamaño del Texto</Text>
 
-<Button title="Verde" onPress={() => setBgColor('green')} />
-
-<Button title="Azul" onPress={() => setBgColor('blue')} />
+<Slider
+style={styles.slider}
+minimumValue={10}
+maximumValue={40}
+step={1}
+value={fontSize}
+onValueChange={(value) => setFontSize(value)}
+/>
 
 </View>
 
-</View>
 );
 }
-const styles = StyleSheet.create({
+const styles = {
 container: {
-
 flex: 1,
 justifyContent: 'center',
 alignItems: 'center',
@@ -58,11 +64,9 @@ width: 200,
 paddingHorizontal: 10,
 marginBottom: 20,
 },
-
-buttonContainer: {
-flexDirection: 'row',
-justifyContent: 'space-around',
-width: '60%',
+slider: {
+width: 200,
+height: 40,
+marginVertical: 20,
 },
-
-});
+};
